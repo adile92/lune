@@ -2,8 +2,11 @@ package edu.esiag.isidis.security;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.Provider;
 import java.security.Security;
 import java.util.Arrays;
 
@@ -24,21 +27,26 @@ public class Test {
 	 * @throws BadPaddingException
 	 * @throws IllegalBlockSizeException
 	 * @throws InvalidKeyException
+	 * @throws NoSuchProviderException 
 	 */
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 			NoSuchPaddingException, IllegalBlockSizeException,
-			BadPaddingException, InvalidKeyException {
+			BadPaddingException, InvalidKeyException, NoSuchProviderException {
 		// TODO Auto-generated method stub
 		
 		MyProvider provider = new MyProvider();
 		Security.addProvider(provider);
-
-
-		Cipher cipher = provider.getCipher("AES");
+//		for (Provider prov : Security.getProviders()) {
+//			System.out.println(prov.getName());
+//		};
+//		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
+		 Cipher.getInstance("DSA");
+//		System.out.println(keyGen);
+		Cipher cipher = provider.getCipher("EC");
 		
 		System.out.println("cipher algo : "+cipher.getAlgorithm());
 		
-		Key key = provider.getKeyGenerator("AES").generateKey();
+		Key key = provider.getKeyGenerator("EC").generateKey();
 		
 		cipher.init(Cipher.ENCRYPT_MODE, key);
 		
@@ -55,6 +63,8 @@ public class Test {
 		 
 		 
 		 Digest keccak = provider.getKeccak(224);
+		 
+	
 		 
 		 System.out.println("keccak "+keccak.digest("toto ss".getBytes()));
 		 System.out.println("keccak "+keccak.digest("toto ss1".getBytes()));

@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.SecureRandom;
+import java.security.Signature;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 
@@ -140,6 +141,15 @@ public class MyProvider extends Provider {
 		return KeyStore.getInstance(type);
 	}
 
+	/**
+	 * @return the signature
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public Signature getSignature(String algo) throws NoSuchAlgorithmException {
+		return Signature.getInstance(algo);
+	}
+
+	
 	/**
 	 * @return the keccak
 	 */
